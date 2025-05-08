@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { assets } from '../assets/assets'
 import axios from 'axios'
 import { backendUrl } from '../App'
+import { toast } from 'react-toastify'
 const Add = ({token}) => {
   const [image1,setImage1] = useState(false)
   const [image2,setImage2] = useState(false)
@@ -13,7 +14,7 @@ const Add = ({token}) => {
   const[price,setPrice] = useState('')
   const[category,setCategory] = useState('Men')
   const[subCategory,setSubCategory] = useState('Topwear')
-  const[bestseller,setBestSeller] = useState('false')
+  const[bestseller,setBestSeller] = useState(false)
   const[sizes,setSizes] = useState([])
 
   const onSubmitHandler = async(e)=>{
@@ -34,9 +35,25 @@ const Add = ({token}) => {
       if (image4) formData.append('image4', image4);
       const response = await axios.post(backendUrl+'/api/product/add',formData,{headers:{token}})
 
-      console.log(response.data)
+      console.log(response)
+
+      if (response.data.success) {
+        toast.success(response.data.message)
+        setImage1(false);
+        setImage2(false);
+        setImage3(false);
+        setImage4(false);
+        setName('');
+        setDescription('');
+        setPrice('');
+        setCategory('Men');
+        setSubCategory('Topwear');
+        setBestSeller('false');
+        setSizes([]);
+      }
     } catch (error) {
-      
+      console.log(error)
+      toast.error(error.message)
     }
   }
 
