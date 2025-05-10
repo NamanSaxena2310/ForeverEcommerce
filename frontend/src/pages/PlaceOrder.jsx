@@ -51,7 +51,7 @@ const PlaceOrder = () => {
             address:formData,
             items:orderItems,
             amount: getCartAmount() + delivery_fee,
-            paymentMethod:method
+            
         }
 
         switch (method) {
