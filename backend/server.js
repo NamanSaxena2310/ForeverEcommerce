@@ -24,6 +24,12 @@ app.use('/api/product', productRouter)
 app.use('/api/cart',cartRouter)
 app.use('/api/order', orderRouter)
 
+//health check
+app.get("/", (req, res) => {
+  res.send("Backend is running!");
+});
+
+
 app.listen(port,()=>{
   console.log("App running on port " , port)
 })
